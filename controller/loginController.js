@@ -2,8 +2,8 @@ import User from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 
 import jwt from 'jsonwebtoken';
-
-const LoginController=async(req,res)=>{
+//for login
+ export const LoginController=async(req,res)=>{
 try {
     const{email,password}=req.body;
     const userExist= await User.findOne({email:email});
@@ -26,12 +26,12 @@ try {
         })
     }
     // authentication function se token generate hokr return hoga
-    const token=jwt.sign({UserId:userExist._id},process.env.Secret_key,{expiresIn:"5d"})
+    const token=jwt.sign({userId:userExist?._id},process.env.Secret_key,{expiresIn:"5d"})
 
     res.send({
         success: true,
         message: "user logged in successfully",
-        data: userExist,
+        data: token,
     })
 }
   catch (error) {
@@ -44,4 +44,23 @@ try {
         }
     }
 
-export default LoginController;
+// get-userby-id
+ export const GetUserByIdController=async(req,res)=>{
+    try {
+        const user= await User.findById(req.body.userId);
+        res.send({
+            success:true,
+            messgae:"user fetched sucessfuly",
+            data:user
+        })
+
+    } catch (error) {
+        res.send({
+            success:false,
+            messgae:"error while fetching user",
+            data:[]
+        }) 
+    }
+}
+
+
