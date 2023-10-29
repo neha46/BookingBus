@@ -3,24 +3,32 @@ import {Form,message} from 'antd';
 import axios from 'axios';
 import '../resources/auth.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch} from 'react-redux';
+import { ShowLoading,HideLoading } from '../redux/alertSlice';
 
-const Login = () => {
+const Login = () => { 
+  const dispatch =useDispatch();
     const navigate = useNavigate();
     const onfinish=async(values)=>{
         try {
+          dispatch(ShowLoading())
             const  response= await axios.post('/api/users/login', values)
+            dispatch(HideLoading())
             console.log(values)
+        
           if(response.data.success){
               message.success(response.data.message)
               localStorage.setItem("token",response.data.data)
               navigate('/');
               }
+
               else
           {
               message.error(response.data.message)
           }
       }
           catch(error){
+            dispatch(HideLoading())
               message.error(error.message)
           }
         }

@@ -1,16 +1,23 @@
 import React from 'react';
 import {Form, message} from 'antd';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 import '../resources/auth.css';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { ShowLoading,HideLoading } from '../redux/alertSlice';
 
 const Register = () => {
+  const dispatch =useDispatch();
+  const navigate=useNavigate()
     const onfinish=async(values)=>{
       try {
+        dispatch(ShowLoading())
           const  response= await axios.post('/api/users/register',values)
+          dispatch(HideLoading())
         if(response.data.success){
             message.success(response.data.message)
+            navigate('/login')
             }
             else
         {
@@ -18,6 +25,7 @@ const Register = () => {
         }
     }
         catch(error){
+          dispatch(HideLoading())
             message.error(error.message)
         }
       }

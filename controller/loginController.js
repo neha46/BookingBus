@@ -47,11 +47,11 @@ try {
 // get-userby-id
  export const GetUserByIdController=async(req,res)=>{
     try {
-        const user= await User.findById(req.body.userId);
+        const human= await User.findById(req.body.userId);
         res.send({
             success:true,
             messgae:"user fetched sucessfuly",
-            data:user
+            data:human
         })
 
     } catch (error) {
