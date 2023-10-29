@@ -14,12 +14,23 @@
     padding:20px;
 }
 .sidebar{
-    width:25% ;
+   padding: 0px 20px;
     border-radius: 5px;
     background-color: var(--primary);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    gap: 15%;
+}
+.sidebar-header{
+    margin-top: 50px;
+}
+.logo{
+    color:whitesmoke;
+}
+.role{
+    color:whitesmoke;
 }
 .content{
     padding: 10px;
@@ -46,4 +57,8 @@
 .MenuItem span{
     font-size: 20px;
     color: whitesmoke;
+}
+i{
+    cursor: pointer;
+    font-size: 25px;
 }

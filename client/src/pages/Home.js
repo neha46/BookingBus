@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 const Home = () => {
   const {user}=useSelector((state)=>state.users)
-  console.log("user is :"+user)
   return (
     <div>
       <h1> Welcome to Home page</h1>
