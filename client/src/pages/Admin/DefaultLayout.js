@@ -23,6 +23,11 @@ const DefaultLayout = ({ children }) => {
       path:'/booking',
       icon: 'ri-bookmark-line'
     },
+     {
+      name:'Buses',
+      path:'/buses',
+      icon: 'ri-bookmark-line'
+    },
     {
       name:'Logout'
       ,path:'/logout',
