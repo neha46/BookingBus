@@ -4,7 +4,7 @@ import BusFrom from '../../components/BusFrom.js';
 import { axiosInstance } from '../../helper/axiosInstance.js';
 import { useDispatch } from 'react-redux';
 import { ShowLoading,HideLoading } from '../../redux/alertSlice.js';
-import { message } from 'antd';
+import { Table, message } from 'antd';
 
 const AdminBuses = () => {
   const [showBusForm,setShowBusForm]=useState(false);
@@ -12,6 +12,7 @@ const AdminBuses = () => {
   const dispatch=useDispatch();
 
   const GetBuses=async()=>{
+
     try{
       
             dispatch(ShowLoading());
@@ -30,6 +31,26 @@ const AdminBuses = () => {
       message.error(error.message)
     }
   }
+  const Columns=[
+    {title:'name',
+    dataIndex:'name'
+  },
+  {title:'Number',
+  dataIndex:'number'
+},
+  {title:'From',
+    dataIndex:'from'
+  },
+    {title:'To',
+    dataIndex:'to'
+  },
+    {title:'JournetDate',
+    dataIndex:'journeyDate'
+  },
+    {title:'Status',
+    dataIndex:'status'
+  }
+  ]
   useEffect(()=>{
     GetBuses()
   },[])
@@ -41,6 +62,9 @@ const AdminBuses = () => {
      <button className='secondary-btn'onClick={()=>setShowBusForm(true)} >AddBus
         </button>
       </div>
+      <Table columns={Columns}>
+
+      </Table>
         {showBusForm && <BusFrom showBusForm={showBusForm} setShowBusForm={setShowBusForm} type='/add'/>}
     </div>
   );
