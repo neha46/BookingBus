@@ -12,7 +12,7 @@ const AdminBuses = () => {
      <button className='secondary-btn'onClick={()=>setShowBusForm(true)} >AddBus
         </button>
       </div>
-        {showBusForm && <BusFrom showBusForm={showBusForm} setShowBusForm={setShowBusForm} />}
+        {showBusForm && <BusFrom showBusForm={showBusForm} setShowBusForm={setShowBusForm} type='/add'/>}
     </div>
   );
 }

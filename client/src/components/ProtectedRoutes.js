@@ -49,7 +49,7 @@ const ProtectedRoutes = ({children}) => {
   }, []);
 
   return <div>
-      {!loading &&<DefaultLayout>{children}</DefaultLayout>
+      {!loading &&<DefaultLayout>{children}</DefaultLayout> 
       }
     </div>
   

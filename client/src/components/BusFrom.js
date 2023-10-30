@@ -1,22 +1,24 @@
 import React from 'react';
 import {Form,Modal,Row,Col, message} from 'antd';
-import axios from 'axios';
-import { axiosInstance } from '../helper/axiosInstance,js';
+import { axiosInstance } from '../helper/axiosInstance';
 import {useDispatch} from 'react-redux';
 import {ShowLoading,HideLoading} from '../redux/alertSlice.js'
+import { useNavigate } from 'react-router-dom';
 
 const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
+
     const dispatch=useDispatch()
     const onfinish=async(values)=>{
         try {
+            dispatch(ShowLoading())
            let response=null;
-           dispatch(ShowLoading())
            if(type==='/add'){
-            response= await axiosInstance.post('/api/buses/add-bus')
+            response= await axiosInstance.post('/api/buses/add-bus',values)
+
            }
            else{
-            dispatch(HideLoading())
-           }
+        }
+        dispatch(HideLoading())
            if(response.data.success){
             message.success(response.data.message)
            }
@@ -31,8 +33,8 @@ const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
     }
   return (
  
-      <Modal width={800} title="Add Bus" visible={showBusForm} onCancel={()=>setShowBusForm(false)} footer={null} >
-        <Form layout='vertical' onFinish={onfinish}>
+      <Modal width={800} title="Add Bus" open={showBusForm} onCancel={()=>setShowBusForm(false)} footer={null} >
+        <Form layout='vertical' onFinish={onfinish} >
             <Row gutter={[10,10]}>
                 <Col lg={24} xs={24}>
                     <Form.Item label="Bus Name" name="name">
@@ -60,7 +62,7 @@ const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
                     </Form.Item>
                 </Col>
                 <Col lg={8} xs={24}>
-                    <Form.Item label="JourneyDate" name="date">
+                    <Form.Item label="JourneyDate" name="journeyDate">
                     <input type="date" />
                     </Form.Item>
                 </Col>
@@ -81,7 +83,7 @@ const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
                     </Form.Item>
                 </Col>
                 <Col lg={12} xs={24}>
-                    <Form.Item label="Price" name="price">
+                    <Form.Item label="fare" name="fare">
                     <input type="text" />
                     </Form.Item>
                 </Col>
