@@ -5,7 +5,7 @@ export const AuthMiddleware=(req,res,next)=>{
     if(!token){
         return res.send({
             sucess:false,
-            message:"auth failed",
+            message:"no token provided",
 
         })
     }
