@@ -29,7 +29,8 @@ try {
 // get-all-buses
 export const GetAllBusesController=async(req,res)=>{
        try {
-        const BusExist=await Bus.find()
+        const BusExist=await Bus.find({})
+
         return res.status(200).send({
             success:true,
             data:BusExist,

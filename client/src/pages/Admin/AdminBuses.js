@@ -8,18 +8,20 @@ import { Table, message } from 'antd';
 
 const AdminBuses = () => {
   const [showBusForm,setShowBusForm]=useState(false);
-  const[AdminBuses,setBuses]=useState([]);
+  const[buses,setBuses]=useState([]);
   const dispatch=useDispatch();
 
-  const GetBuses=async()=>{
+  const GetBuses=async(req,res)=>{
 
     try{
       
             dispatch(ShowLoading());
             const response=await axiosInstance.post('/api/buses/get-all-buses',{})
+            console.log(response)
             
             if(response.data.success){
                 message.success(response.data.message)
+                setBuses(response.data.data)
               }
             else{
                 message.error(response.data.message)
@@ -31,7 +33,8 @@ const AdminBuses = () => {
       message.error(error.message)
     }
   }
-  const Columns=[
+  console.log("Buses is",buses)
+  const columns=[
     {title:'name',
     dataIndex:'name'
   },
@@ -48,7 +51,18 @@ const AdminBuses = () => {
     dataIndex:'journeyDate'
   },
     {title:'Status',
-    dataIndex:'status'
+    dataIndex:'status',
+  
+  },
+   {title:'Action',
+    dataIndex:'action',
+    render:(action,record)=>(
+      <div className="d-flex gap-3">
+        <i class="ri-delete-bin-6-line"></i>
+        <i class="ri-pencil-fill"></i>
+      </div>
+    )
+  
   }
   ]
   useEffect(()=>{
@@ -62,9 +76,7 @@ const AdminBuses = () => {
      <button className='secondary-btn'onClick={()=>setShowBusForm(true)} >AddBus
         </button>
       </div>
-      <Table columns={Columns}>
-
-      </Table>
+      <Table columns={columns} dataSource={buses}/>
         {showBusForm && <BusFrom showBusForm={showBusForm} setShowBusForm={setShowBusForm} type='/add'/>}
     </div>
   );

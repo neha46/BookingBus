@@ -4,6 +4,7 @@ import { axiosInstance } from '../helper/axiosInstance';
 import {useDispatch} from 'react-redux';
 import {ShowLoading,HideLoading} from '../redux/alertSlice.js'
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
 
@@ -13,7 +14,10 @@ const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
             dispatch(ShowLoading())
            let response=null;
            if(type==='/add'){
-            response= await axiosInstance.post('/api/buses/add-bus',values)
+            response= await axiosInstance.post('/api/buses/add-bus',{
+                ...values,
+                journeyDate:moment(values.journeyDate).format('DD-MM-YYYY')
+            })
 
            }
            else{
