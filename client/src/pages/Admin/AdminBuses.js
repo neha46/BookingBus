@@ -11,7 +11,7 @@ const AdminBuses = () => {
   const[buses,setBuses]=useState([]);
   const dispatch=useDispatch();
 
-  const GetBuses=async(req,res)=>{
+  const getBuses=async()=>{
 
     try{
       
@@ -22,6 +22,31 @@ const AdminBuses = () => {
             if(response.data.success){
                 message.success(response.data.message)
                 setBuses(response.data.data)
+              }
+            else{
+                message.error(response.data.message)
+            }
+              dispatch(HideLoading())
+        } 
+    catch(error){
+       dispatch(HideLoading())
+      message.error(error.message)
+    }
+  }
+
+  const deleteBus=async(id)=>{
+
+    try{
+      
+            dispatch(ShowLoading());
+            const response=await axiosInstance.post('/api/buses/delete-bus',{
+              _id:id,
+            })
+            console.log(response)
+            
+            if(response.data.success){
+                message.success(response.data.message)
+                getBuses()
               }
             else{
                 message.error(response.data.message)
@@ -58,8 +83,9 @@ const AdminBuses = () => {
     dataIndex:'action',
     render:(action,record)=>(
       <div className="d-flex gap-3">
-        <i class="ri-delete-bin-6-line"></i>
+        <i class="ri-delete-bin-6-line" onClick={()=>{deleteBus(record._id)}}></i>
         <i class="ri-pencil-fill" onClick={()=>{
+         
           setSelectedBus(record);
           setShowBusForm(true);
         }
@@ -70,7 +96,7 @@ const AdminBuses = () => {
   }
   ]
   useEffect(()=>{
-    GetBuses()
+    getBuses();
   },[])
 
   return (
@@ -85,7 +111,7 @@ const AdminBuses = () => {
         {showBusForm && <BusFrom showBusForm={showBusForm} setShowBusForm={setShowBusForm} 
         type={selectedBus ? 'edit' : 'add'}
         selectedBus={selectedBus}
-        getData={GetBuses}
+        getBuses={getBuses}
         setSelectedBus={setSelectedBus}
         />}
     </div>

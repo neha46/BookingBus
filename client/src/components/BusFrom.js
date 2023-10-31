@@ -45,11 +45,11 @@ const BusFrom = ({showBusForm,setShowBusForm,
     }
   return (
  
-      <Modal width={800} title={type === "add" ? "Add Bus": "Update Bus"} open={showBusForm}
+      <Modal width={800} title={type === "add" ? "Add Bus": "Update-bus"} open={showBusForm}
        onCancel={()=>{
         setSelectedBus(null)
-        setShowBusForm(false)
-       }} footer={null} >
+        setShowBusForm(false)}
+       } footer={null} >
         <Form layout='vertical' onFinish={onfinish} initialValues={selectedBus}>
             <Row gutter={[10,10]}>
                 <Col lg={24} xs={24}>
