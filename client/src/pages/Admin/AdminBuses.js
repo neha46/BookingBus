@@ -5,9 +5,9 @@ import { axiosInstance } from '../../helper/axiosInstance.js';
 import { useDispatch } from 'react-redux';
 import { ShowLoading,HideLoading } from '../../redux/alertSlice.js';
 import { Table, message } from 'antd';
-
 const AdminBuses = () => {
   const [showBusForm,setShowBusForm]=useState(false);
+  const [selectedBus,setSelectedBus]=useState(null)
   const[buses,setBuses]=useState([]);
   const dispatch=useDispatch();
 
@@ -47,8 +47,8 @@ const AdminBuses = () => {
     {title:'To',
     dataIndex:'to'
   },
-    {title:'JournetDate',
-    dataIndex:'journeyDate'
+    {title:'JourneyDate',
+    dataIndex:'journeyDate',
   },
     {title:'Status',
     dataIndex:'status',
@@ -59,7 +59,11 @@ const AdminBuses = () => {
     render:(action,record)=>(
       <div className="d-flex gap-3">
         <i class="ri-delete-bin-6-line"></i>
-        <i class="ri-pencil-fill"></i>
+        <i class="ri-pencil-fill" onClick={()=>{
+          setSelectedBus(record);
+          setShowBusForm(true);
+        }
+        }></i>
       </div>
     )
   
@@ -68,6 +72,7 @@ const AdminBuses = () => {
   useEffect(()=>{
     GetBuses()
   },[])
+
   return (
     <div>
       <div className="d-flex justify-content-between">
@@ -77,7 +82,12 @@ const AdminBuses = () => {
         </button>
       </div>
       <Table columns={columns} dataSource={buses}/>
-        {showBusForm && <BusFrom showBusForm={showBusForm} setShowBusForm={setShowBusForm} type='/add'/>}
+        {showBusForm && <BusFrom showBusForm={showBusForm} setShowBusForm={setShowBusForm} 
+        type={selectedBus ? 'edit' : 'add'}
+        selectedBus={selectedBus}
+        getData={GetBuses}
+        setSelectedBus={setSelectedBus}
+        />}
     </div>
   );
 }

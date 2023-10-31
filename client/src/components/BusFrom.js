@@ -6,22 +6,27 @@ import {ShowLoading,HideLoading} from '../redux/alertSlice.js'
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
+const BusFrom = ({showBusForm,setShowBusForm,
+    type="add",selectedBus,getBuses,setSelectedBus}) => {
 
     const dispatch=useDispatch()
     const onfinish=async(values)=>{
         try {
+            console.log(values)
             dispatch(ShowLoading())
            let response=null;
-           if(type==='/add'){
-            response= await axiosInstance.post('/api/buses/add-bus',{
-                ...values,
-                journeyDate:moment(values.journeyDate).format('DD-MM-YYYY')
-            })
+           if(type ==='add'){
+             response= await axiosInstance.post('/api/buses/add-bus',values)
+            console.log("response is:",response)}
 
-           }
            else{
+            console.log("selectedBus is:",selectedBus)
+            response=await axiosInstance.post('/api/buses/update-bus',{
+                ...values,
+                _id:selectedBus._id,
+            })
         }
+
         dispatch(HideLoading())
            if(response.data.success){
             message.success(response.data.message)
@@ -29,6 +34,9 @@ const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
            else{
             message.error(response.data.message)
            }
+           getBuses();
+           setShowBusForm(false)
+           setSelectedBus(null)
         } catch (error) {
             message.error(error.message)
             dispatch(HideLoading())
@@ -37,8 +45,12 @@ const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
     }
   return (
  
-      <Modal width={800} title="Add Bus" open={showBusForm} onCancel={()=>setShowBusForm(false)} footer={null} >
-        <Form layout='vertical' onFinish={onfinish} >
+      <Modal width={800} title={type === "add" ? "Add Bus": "Update Bus"} open={showBusForm}
+       onCancel={()=>{
+        setSelectedBus(null)
+        setShowBusForm(false)
+       }} footer={null} >
+        <Form layout='vertical' onFinish={onfinish} initialValues={selectedBus}>
             <Row gutter={[10,10]}>
                 <Col lg={24} xs={24}>
                     <Form.Item label="Bus Name" name="name">
@@ -93,7 +105,7 @@ const BusFrom = ({showBusForm,setShowBusForm,type='add'}) => {
                 </Col>
             </Row>
             <div className="d-flex justify-content-end">
-                <button className="secondary-btn" type="submit">submit</button>
+                <button className="secondary-btn" type="submit">Save</button>
             </div>
         </Form>
       </Modal>

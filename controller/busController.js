@@ -1,13 +1,13 @@
+
 import Bus from "../models/busModel.js";
 //for creaing bus
  export const BusController=async(req,res)=>{
-    console.log("res is:"+res)
-    console.log("Bus model is :"+Bus)
+   
 try {
     const ExistingBus=await Bus.findOne({number:req.body.number})
     if(ExistingBus){
         return res.status(200).send({
-            sucess:false,
+            success:false,
             message:"bus already exits"
         })
     }
@@ -20,7 +20,7 @@ try {
     })
 } catch (error) {
     res.status(500).send({
-        sucess:false,
+        success:false,
         message:error.message 
     })
 }
@@ -39,10 +39,27 @@ export const GetAllBusesController=async(req,res)=>{
        } catch (error) {
         res.status(400).send({
             success:false,
-            data:null,
+            data:[],
             message:error.message,
         })
        }
+}
+
+// updatw-bus
+export const UpdateBusController=async(req,res)=>{
+    try {
+        await Bus.findByIdAndUpdate(req.body._id,req.body,{new:true});
+        res.status(200).send({
+            message:"bus updated successfullu",
+            success:true,
+        
+        })
+    } catch (error) {
+        res.status(400).send({
+            message:error.message,
+            success:false
+        })
+    }
 }
 
 
