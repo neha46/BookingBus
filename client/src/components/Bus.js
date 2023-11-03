@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Bus = ({bus}) => {
     const navigate=useNavigate()
+    console.log(`bus is ${bus._id}`)
   return (
     <div className='card p-3 gap-1'>
       <h1 className='text-lg'>{bus.name}</h1>

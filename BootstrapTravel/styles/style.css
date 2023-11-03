@@ -1,0 +1,83 @@
+@import './fonts.css';
+
+*body{
+    line-height: normal;
+    font-style: normal;
+}
+a.nav-link{
+    font-family: var(--akronim);
+    font-size: 17px;
+line-height: normal;
+}
+li.nav-item{
+    padding-right: 50px;
+}
+
+.text-label{
+    color: #DF6951;
+font-family: Poppins;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-transform: uppercase;
+}
+.text-girl{
+    color: var(--1st, #181E4B);
+font-family:' Volkhov';
+font-size: 84px;
+font-style: normal;
+font-weight: 700;
+line-height: 89px; /* 105.952% */
+letter-spacing: -3.36px;
+}
+.text-girl1{
+    color: var(--3rd, #14183E);
+font-family: 'Volkhov';
+font-size: 50px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-transform: capitalize;
+}
+.text-head{
+    color: var(--3rd, #14183E);
+text-align: center;
+font-family: Volkhov;
+font-size: 50px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-transform: capitalize;
+}
+.text-subhead{
+    color: var(--text-heading-color, #1E1D4C);
+text-align: center;
+font-family: Open Sans Condensed;
+font-size: 20px;
+font-weight: 700;
+line-height: normal;
+}
+.text-secondary{
+    color: var(--TEXT-CLR, #5E6282);
+font-family: 'Poppins';
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+}
+.text-girl2{
+    color: var(--TEXT-CLR, #5E6282);
+font-family: 'Poppins';
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 124.5%; /* 19.92px */
+}
+.text-girlA{
+    color: var(--TEXT-CLR, #5E6282);
+text-align: center;
+font-family: 'Poppins';
+font-size: 16px;
+font-weight: 500;
+line-height: 26px; /* 162.5% */
+}

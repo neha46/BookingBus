@@ -45,6 +45,25 @@ export const GetAllBusesController=async(req,res)=>{
        }
 }
 
+// gt-bus by id
+export const GetBusByIdController=async(req,res)=>{
+    try{
+const bus=await Bus.findById({_id:req.body._id});
+console.log(bus)
+return  res.status(200).send({
+    message:"bus aagyi h",
+    data:bus,
+    success:true
+})
+    }
+    catch(error){
+        res.status(400).send({
+            message:error.message,
+            success:false
+        })
+    }
+}
+
 //delete bus
 export const DeleteBusController=async(req,res)=>{
     try {
