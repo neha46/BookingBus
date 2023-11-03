@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import '../resources/bus.css';
 const SeatSelection = ({selectedSeats,setSelectedSeats,bus}) => {
-    const capacity=bus.capacity;
+    const capacity=bus?.capacity;
     const SelectOrUnselectSeats=(seatNumber)=>{
         if(selectedSeats.includes(seatNumber)){
             setSelectedSeats(selectedSeats.filter((seat)=>seat !==seatNumber))
@@ -13,6 +13,7 @@ const SeatSelection = ({selectedSeats,setSelectedSeats,bus}) => {
         }
 
     }
+    console.log("bus is",bus)
   return (
     <div className='bus-container'>
         <Row gutter={[10,10]}>
@@ -21,10 +22,13 @@ const SeatSelection = ({selectedSeats,setSelectedSeats,bus}) => {
             if(selectedSeats.includes(seat+1)){
                 seatClass="selected-seat"
             }
-                return <Col span={6}>
+            else if(bus?.seatsBooked?.includes(seat+1)){
+                seatClass="booked-seat"
+            }
+                return (<Col span={6}>
                     <div className={`seat ${seatClass} ` }
                     onClick={()=>SelectOrUnselectSeats(seat+1)}>{seat+1}</div>
-                </Col>
+                </Col>)
 })}
         </Row>
       

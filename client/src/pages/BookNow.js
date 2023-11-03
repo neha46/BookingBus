@@ -13,6 +13,10 @@ const BookNow = () => {
          const dispatch=useDispatch();
          const params=useParams()
 
+  useEffect(()=>{
+        getBus();
+  },[])
+
     const getBus=async()=>{
  
         try{
@@ -41,10 +45,32 @@ const BookNow = () => {
           message.error(error.message)
         }
       }
+
+    const BookNow=async()=>{
+      try {
+        dispatch(ShowLoading());
+                const BookingResponse=await axiosInstance.post('/api/booking/book-seat',{
+                    bus:bus._id,
+                    seats:selectedSeats
+                })
+                console.log(BookingResponse.data)
+                  if(BookingResponse.data.success){
+                    message.success(BookingResponse.data.message)
+                    setBus(BookingResponse.data.data)
+                  }
+                 
+                else{
+                    message.error(BookingResponse.data.message)
+                }
+                  dispatch(HideLoading())
+        
+      } catch (error) {
+        dispatch(HideLoading())
+        message.error(error.message)
+      }
+    }
       
-    useEffect(()=>{
-        getBus();
-      },[])
+  
       console.log("bus is:",bus)
   return (
     <div>
@@ -64,7 +90,7 @@ const BookNow = () => {
           <div className='flex flex-col gap-3 mt-3'>
           <h1 className="text-lg text-secondary">Selected Seats:<b> {selectedSeats.join(" , ")}</b></h1>
           <h1 className="text-lg text-secondary">Price:<b> {bus.fare * selectedSeats.length}</b></h1>
-          <button className="secondary-btn">BookNow</button>
+          <button className="secondary-btn mt-3" onClick={()=>BookNow()}>BookNow</button>
             </div>
         </Col>
         {/* for seat selection */}
