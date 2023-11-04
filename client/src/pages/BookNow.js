@@ -13,10 +13,6 @@ const BookNow = () => {
          const dispatch=useDispatch();
          const params=useParams()
 
-  useEffect(()=>{
-        getBus();
-  },[])
-
     const getBus=async()=>{
  
         try{
@@ -46,7 +42,8 @@ const BookNow = () => {
         }
       }
 
-    const BookNow=async()=>{
+      
+    const BookRNow=async()=>{
       try {
         dispatch(ShowLoading());
                 const BookingResponse=await axiosInstance.post('/api/booking/book-seat',{
@@ -55,8 +52,7 @@ const BookNow = () => {
                 })
                 console.log(BookingResponse.data)
                   if(BookingResponse.data.success){
-                    message.success(BookingResponse.data.message)
-                    setBus(BookingResponse.data.data)
+                    message.success(BookingResponse.data.message)   
                   }
                  
                 else{
@@ -69,28 +65,36 @@ const BookNow = () => {
         message.error(error.message)
       }
     }
+    console.log("selectedSeats is",selectedSeats)
       
   
-      console.log("bus is:",bus)
+    useEffect(()=>{
+      getBus();
+},[])
+console.log("buss is",bus)
+     
   return (
     <div>
      {bus && (<Row className='mt-3' gutter={[20]}>
         <Col lg={12} xs={24} sm={24} >
-          <h1 className="text-2xl text-secondary">{bus.name}</h1>
-          <h1 className="text-md">{bus.from} - {bus.to}</h1>
+          <h1 className="text-2xl text-secondary">{bus?.name}</h1>
+          <h1 className="text-md">{bus?.from} - {bus?.to}</h1>
           <hr/>
           <div className='flex flex-col gap-3 mt-3'>
-          <h1 className="text-lg text-secondary">JourneyDate:<b> {bus.journeyDate}</b></h1>
-          <h1 className="text-lg text-secondary">Fare:<b> $ {bus.fare} /-</b></h1>
-          <h1 className="text-lg text-secondary">DepartureTime:<b> {bus.departure}</b></h1>
-          <h1 className="text-lg text-secondary">ArrivalTime:<b> {bus.arrival}</b></h1>
+          <h1 className="text-lg text-secondary">JourneyDate:<b> {bus?.journeyDate}</b></h1>
+          <h1 className="text-lg text-secondary">Fare:<b> $ {bus?.fare} /-</b></h1>
+          <h1 className="text-lg text-secondary">DepartureTime:<b> {bus?.departure}</b></h1>
+          <h1 className="text-lg text-secondary">ArrivalTime:<b> {bus?.arrival}</b></h1>
+          <h1 className="text-lg text-secondary">Seats Left:<b> {bus?.capacity - (bus?.seatsBooked?.length + selectedSeats.length)}</b></h1>
           </div>
         <hr/>
 
           <div className='flex flex-col gap-3 mt-3'>
           <h1 className="text-lg text-secondary">Selected Seats:<b> {selectedSeats.join(" , ")}</b></h1>
-          <h1 className="text-lg text-secondary">Price:<b> {bus.fare * selectedSeats.length}</b></h1>
-          <button className="secondary-btn mt-3" onClick={()=>BookNow()}>BookNow</button>
+          <h1 className="text-lg text-secondary">Price:<b> {bus?.fare * selectedSeats.length}</b></h1>
+          <button className={`secondary-btn mt-3 ${ selectedSeats.length===0 && "disabel-btn"}`} onClick={()=>BookRNow()}
+         
+          >BookNow</button>
             </div>
         </Col>
         {/* for seat selection */}

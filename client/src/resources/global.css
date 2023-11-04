@@ -41,7 +41,7 @@ input{
 
 /* butons */
 .primary-btn{
-    background-color: var(--primary);
+    background-color: var(--primary) !important;
     color:white;
     padding: 10px 20px;
     cursor: pointer;
@@ -50,10 +50,18 @@ input{
 }
 
 .secondary-btn{
-    background-color: var(--secondary);
+    background-color: var(--secondary) !important;
     color:white;
     padding: 10px 20px;
     cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+.disabel-btn{
+    background-color:gray !important;
+    color:white;
+    padding: 10px 20px;
+    cursor: disabled !important;;
     border: none;
     border-radius: 5px;
 }
