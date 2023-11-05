@@ -14,6 +14,7 @@ const SeatSelection = ({selectedSeats,setSelectedSeats,bus}) => {
         }
 
     }
+   
     console.log("bus is",bus)
   return (
     <div className='bus-container'>

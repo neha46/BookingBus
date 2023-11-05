@@ -6,6 +6,7 @@ import { useState,useEffect } from 'react';
 import {message,Row,Col} from 'antd';
 import { useParams } from 'react-router-dom';
 import SeatSelection from '../components/SeatSelection.js';
+import StripeCheckout from 'react-stripe-checkout';
 
 const BookNow = () => {
   const [selectedSeats,setSelectedSeats]=useState([])
@@ -67,7 +68,9 @@ const BookNow = () => {
     }
     console.log("selectedSeats is",selectedSeats)
       
-  
+  const onToken=(token)=>{
+    console.log("Token is ",token)
+  }
     useEffect(()=>{
       getBus();
 },[])
@@ -92,9 +95,15 @@ console.log("buss is",bus)
           <div className='flex flex-col gap-3 mt-3'>
           <h1 className="text-lg text-secondary">Selected Seats:<b> {selectedSeats.join(" , ")}</b></h1>
           <h1 className="text-lg text-secondary">Price:<b> {bus?.fare * selectedSeats.length}</b></h1>
-          <button className={`secondary-btn mt-3 ${ selectedSeats.length===0 && "disabel-btn"}`} onClick={()=>BookRNow()}
-         
+
+          <StripeCheckout
+        token={onToken}
+        stripeKey="pk_test_51O8jEzSGlvPU17qhp77V9AynqOWrLCJbt0GjEPMlt51cEe8KWRCgUxacWntIgtu76MOvJAcVKXZtndnPKzCHMWsc00qEQtcl3w">
+
+          <button className={`secondary-btn mt-3 ${ selectedSeats.length===0 && "disabel-btn"}`}
           >BookNow</button>
+      </StripeCheckout>
+
             </div>
         </Col>
         {/* for seat selection */}

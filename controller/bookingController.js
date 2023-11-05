@@ -10,7 +10,7 @@ export const BookingController=async(req,res)=>{
     
         bus.seatsBooked=[...bus.seatsBooked,...req.body.seats];
         await bus.save();
-        return res.status(200).send({
+         res.status(200).send({
             success:true,
             message:"booking created sucessfully",
             data:Newbooking,
